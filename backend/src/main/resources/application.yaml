@@ -1,0 +1,28 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: stizy
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/stizy}
+    username: ${DB_USER:stizy}
+    password: ${DB_PASSWORD:stizy_dev}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+stizy:
+  jwt:
+    secret-base64: ${JWT_SECRET}
+    issuer: stizy
+    expiration-minutes: 120

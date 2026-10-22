@@ -1,0 +1,26 @@
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: stizy-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: stizy
+      POSTGRES_USER: stizy
+      POSTGRES_PASSWORD: stizy_dev
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - stizy_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stizy -d stizy"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  stizy_postgres_data:
