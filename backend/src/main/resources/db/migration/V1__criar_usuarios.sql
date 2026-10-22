@@ -1,0 +1,15 @@
+CREATE TABLE usuarios (
+    id UUID PRIMARY KEY,
+
+    nome VARCHAR(120) NOT NULL,
+
+    email VARCHAR(180) NOT NULL UNIQUE,
+
+    senha_hash VARCHAR(100) NOT NULL,
+
+    papel VARCHAR(20) NOT NULL
+        CHECK (papel IN ('CLIENTE', 'PROFISSIONAL')),
+
+    criado_em TIMESTAMPTZ NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+);
