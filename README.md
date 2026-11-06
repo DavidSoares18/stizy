@@ -50,14 +50,16 @@ Estas funcionalidades **não fazem parte do compromisso inicial do MVP** e poder
 
 ## 🛠️ Tecnologias
 
-As tecnologias do projeto serão definidas pela equipe na etapa inicial de planejamento.
-
 | Camada | Tecnologia |
 | --- | --- |
-| Front-end | A definir |
-| Back-end e APIs | A definir |
-| Banco de dados | A definir |
-| Hospedagem / deploy | A definir |
+| Front-end | React, TypeScript e Vite |
+| Back-end | Java 21 e Spring Boot |
+| Banco de dados | PostgreSQL |
+| Persistência | Spring Data JPA e Flyway |
+| Segurança | Spring Security, JWT e BCrypt |
+| Gerenciamento | Maven e npm |
+| Controle de versão | Git e GitHub |
+| Ambiente de desenvolvimento | GitHub Codespaces |
 
 ## 👨‍💻 Equipe e responsabilidades
 
@@ -123,13 +125,40 @@ O projeto está em fase inicial de planejamento. As instruções de instalação
 
 ## 📌 Status
 
-**🟡 Planejamento inicial — desenvolvimento previsto a partir de 19/10/2026.**
+**🟢 Projeto em desenvolvimento.**
 
-As funcionalidades descritas neste README representam o **escopo planejado** e ainda não devem ser consideradas implementadas.
+### Funcionalidades do back-end
+
+- [x] Estrutura inicial do servidor.
+- [x] Endpoint de verificação da API.
+- [x] Cadastro de usuários.
+- [x] Autenticação com JWT.
+- [x] Consulta de usuário autenticado.
+- [ ] CRUD de serviços (implementação em andamento).
+- [ ] Gerenciamento de horários.
+- [ ] Consulta de disponibilidade.
+- [ ] Agendamentos.
+- [ ] Cancelamento e remarcação.
+
+As funcionalidades marcadas como concluídas tiveram
+seus fluxos principais validados em testes manuais.
+Testes adicionais e integração completa continuam
+fazendo parte do desenvolvimento.
 
 ## 🎓 Contexto acadêmico
 
 Projeto desenvolvido por **David, João e Ian** para a disciplina de **Gerência de Projetos de Software**, com foco em planejamento, divisão de responsabilidades, desenvolvimento colaborativo, acompanhamento de entregas e construção de um produto mínimo viável.
+
+## 📚 Documentação técnica
+
+A documentação detalhada das funcionalidades
+está disponível no diretório `docs/`.
+
+| Documento | Descrição |
+| --- | --- |
+| [Planejamento](planejamento.md) | Cronograma e tarefas |
+| [CRUD de Serviços](docs/CRUD_SERVICOS.md) | Implementação e regras da API |
+| [Testes da API](docs/TESTES_API_SERVICOS.md) | Requisições e testes dos serviços |
 
 ---
 
