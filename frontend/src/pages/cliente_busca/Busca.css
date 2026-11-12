@@ -1,0 +1,12 @@
+.busca-subtitulo { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+.busca-lista { display: flex; flex-direction: column; gap: 14px; }
+.dica-busca {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 24px;
+  border-radius: 20px; background: var(--tinta); color: var(--branco);
+}
+.dica-busca p { font-size: 17px; font-weight: 800; line-height: 1.4; }
+
+@media (max-width: 900px) {
+  .pagina-lateral:has(.dica-busca) { display: none; }
+  .busca-lista { gap: 10px; }
+}

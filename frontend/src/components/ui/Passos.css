@@ -1,0 +1,21 @@
+.passos { display: flex; align-items: center; gap: 12px; }
+.passo { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--texto2); }
+.passo-bolinha {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; font-size: 13px; font-weight: 800;
+  border: 1.5px solid var(--borda-campo); background: var(--branco); color: var(--tinta);
+}
+.passo.feito .passo-bolinha, .passo.atual .passo-bolinha {
+  background: var(--roxo); border-color: var(--roxo); color: var(--branco);
+}
+.passo.atual { color: var(--tinta); font-weight: 800; }
+.passo-linha { width: 32px; height: 2px; background: var(--divisor); margin-left: 4px; }
+
+@media (max-width: 900px) {
+  .passos { gap: 6px; width: 100%; }
+  .passo { flex: 0 1 auto; min-width: 0; font-size: 12px; gap: 5px; }
+  .passo:not(:last-child) { flex: 1 1 auto; }
+  .passo-bolinha { width: 24px; height: 24px; font-size: 12px; }
+  .passo-rotulo { white-space: nowrap; }
+  .passo-linha { flex: 1; min-width: 6px; width: auto; margin-left: 2px; }
+}

@@ -1,0 +1,103 @@
+.voltar-link {
+  display: inline-flex; align-items: center; gap: 4px; align-self: flex-start;
+  color: var(--roxo); font-size: 15px; font-weight: 800;
+}
+.voltar-link:hover { text-decoration: underline; }
+
+/* ----- Cabeçalho do negócio ----- */
+.negocio-cabecalho { display: flex; align-items: center; gap: 20px; }
+.negocio-info { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.negocio-nome { font-size: 36px; font-weight: 800; line-height: 1.1; }
+.negocio-nome-vazio { width: 280px; height: 32px; }
+.negocio-linha { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; font-size: 14px; color: var(--texto2); }
+.negocio-linha .linha-vazia { width: 360px; max-width: 100%; height: 18px; }
+.negocio-linha .linha-vazia.curta { width: 260px; }
+.negocio-avaliacoes { font-size: 15px; }
+.negocio-endereco { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; }
+.negocio-endereco svg { color: var(--roxo); }
+
+/* ----- Lista de serviços ----- */
+.servicos-lista { display: flex; flex-direction: column; gap: 12px; }
+.servico-linha {
+  display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px 20px; text-align: left;
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: 14px; color: var(--tinta);
+  transition: border-color .2s, background-color .2s;
+}
+.servico-linha:hover { border-color: var(--roxo2); }
+.servico-linha.ativo { background: var(--roxo-claro); border: 2px solid var(--roxo); padding: 15px 19px; }
+.servico-texto { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.servico-texto strong { font-size: 18px; font-weight: 800; }
+.servico-duracao { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--texto2); }
+.servico-preco { font-size: 20px; font-weight: 800; white-space: nowrap; }
+.servico-marca {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--borda-campo);
+  background: var(--branco); color: var(--branco); transition: background-color .2s, border-color .2s;
+}
+.servico-marca.quadrada { border-radius: 8px; }
+.servico-linha.ativo .servico-marca { background: var(--roxo); border-color: var(--roxo); }
+
+/* ----- Grade de produtos ----- */
+.produtos-grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.produto-card {
+  display: flex; flex-direction: column; gap: 6px; padding: 14px;
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card);
+}
+.produto-imagem {
+  display: flex; align-items: center; justify-content: center; height: 104px; margin-bottom: 6px;
+  border-radius: 12px; background: var(--roxo-claro); color: var(--roxo2);
+}
+.produto-nome { font-size: 18px; font-weight: 800; }
+.produto-descricao { font-size: 13px; color: var(--texto2); }
+.produto-preco-linha { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 6px 0 8px; }
+.produto-preco { font-size: 20px; font-weight: 800; }
+.produto-botao { min-height: 44px; }
+.produto-card.esgotado .produto-imagem { background: var(--branco); color: var(--texto2); }
+.produto-card.esgotado .produto-nome { color: var(--texto2); }
+.produto-botao.indisponivel { color: var(--texto2); border-color: var(--borda-campo); }
+
+.negocio-nota-rodape { font-size: 13px; color: var(--texto2); }
+
+/* ----- Resumo ----- */
+.resumo-duracao { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--texto2); }
+.entrega-chips { display: flex; gap: 8px; }
+.entrega-chips .chip { min-height: 40px; }
+
+/* ----- Avaliações ----- */
+.avaliacoes-lista { display: flex; flex-direction: column; gap: 12px; }
+.avaliacao-card {
+  display: flex; gap: 14px; padding: 16px 20px; background: var(--cinza);
+  border: 1px solid var(--divisor); border-radius: 14px;
+}
+.avaliacao-corpo { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1; }
+.avaliacao-topo { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.avaliacao-corpo p { font-size: 14px; line-height: 1.5; color: var(--texto2); }
+.avaliacao-corpo small { font-size: 12px; color: var(--texto2); }
+
+/* ----- Modal de solicitação ----- */
+.solicitacao-resumo {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin-bottom: 14px;
+  padding: 14px 16px; border-radius: 12px; background: var(--cinza);
+}
+.solicitacao-resumo strong { grid-column: 1 / -1; font-size: 17px; font-weight: 800; }
+.solicitacao-resumo span { font-size: 14px; color: var(--texto2); }
+.solicitacao-resumo b { color: var(--roxo); font-size: 15px; }
+
+@media (max-width: 1100px) { .produtos-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ----- Mobile ----- */
+@media (max-width: 900px) {
+  .negocio-cabecalho { padding: 14px; background: var(--cinza); border: 1px solid var(--divisor); border-radius: 14px; }
+  .negocio-cabecalho .avatar, .negocio-nome, .negocio-nome-vazio { display: none; }
+  .negocio-info { gap: 10px; }
+  .servico-linha { padding: 14px 16px; gap: 12px; }
+  .servico-linha.ativo { padding: 13px 15px; }
+  .servico-texto strong { font-size: 16px; }
+  .servico-preco { font-size: 16px; }
+  .produtos-grade { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .produtos-grade > :nth-child(n+5) { display: none; }
+  .produto-imagem { height: 80px; }
+  .produto-nome { font-size: 15px; }
+  .produto-preco { font-size: 17px; }
+  .produto-preco-linha { flex-wrap: wrap; }
+}

@@ -1,0 +1,56 @@
+.folha-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.folha-titulo { font-size: 28px; }
+
+.folha-totais { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.folha-total {
+  display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 16px;
+  background: var(--branco); border: 1px solid var(--divisor); font-size: 14px; color: var(--texto2);
+}
+.folha-total strong { font-size: 28px; color: var(--tinta); font-weight: 800; }
+.folha-total.destaque { background: var(--roxo-claro); border-color: transparent; }
+.folha-total.destaque .esqueleto { background: var(--branco); }
+.valor-vazio { width: 130px; height: 28px; }
+
+.folha-detalhes { display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; align-items: start; }
+.folha-bloco { display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 16px; background: var(--branco); border: 1px solid var(--divisor); }
+.folha-bloco.cinza { background: var(--cinza); }
+.folha-bloco h2 { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.folha-linha { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--texto2); }
+.folha-linha strong { color: var(--tinta); }
+.folha-linha .valor-vazio { width: 80px; height: 14px; }
+
+/* ----- Card escuro da taxa ----- */
+.folha-taxa {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 24px;
+  border-radius: 24px; background: var(--tinta); color: var(--branco);
+}
+.folha-taxa-rotulo { font-size: 15px; }
+.folha-taxa-valor { font-size: 52px; font-weight: 800; line-height: 1.1; color: var(--amarelo); }
+.folha-taxa-vazia { width: 220px; height: 48px; background: rgba(255, 255, 255, .15); }
+.folha-taxa small { font-size: 12px; line-height: 1.5; opacity: .9; margin-bottom: 8px; }
+
+/* ----- Modal ----- */
+.folha-modal-dados { display: flex; flex-direction: column; gap: 4px; margin: 0 0 8px; font-size: 14px; color: var(--texto2); }
+.folha-modal-dados > div { display: flex; gap: 6px; }
+.folha-modal-dados dd { margin: 0; }
+
+@media (max-width: 1100px) { .folha-detalhes { grid-template-columns: 1fr; } }
+
+@media (max-width: 900px) {
+  .folha-topo { flex-direction: column; align-items: flex-start; }
+  .folha-titulo { font-size: 18px; order: 2; }
+  .folha-topo .abas { order: 1; }
+  .folha-totais { grid-template-columns: 1fr; gap: 8px; }
+  .folha-total { flex-direction: row; align-items: center; justify-content: space-between; padding: 12px 16px; }
+  .folha-total strong { font-size: 18px; }
+  .folha-total.destaque strong { font-size: 20px; }
+  .folha-detalhes { grid-template-columns: 1fr; }
+  /* Ordem no mobile (Figma): abas > totais > taxa > detalhes */
+  .folha-principal { display: contents; }
+  .folha-topo { order: 1; }
+  .folha-totais { order: 2; }
+  .folha-lateral { order: 3; }
+  .folha-detalhes { order: 4; }
+  .folha-taxa { padding: 18px; border-radius: 18px; }
+  .folha-taxa-valor { font-size: 40px; }
+}

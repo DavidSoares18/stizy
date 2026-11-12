@@ -1,0 +1,56 @@
+.alerta-estoque {
+  display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px;
+  background: var(--amarelo); color: var(--tinta); font-size: 14px; font-weight: 500;
+}
+.alerta-estoque svg { flex-shrink: 0; }
+
+/* ----- Tabela ----- */
+.tabela-produtos { background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card); overflow: hidden; }
+.tabela-cabecalho, .tabela-linha {
+  display: grid; grid-template-columns: minmax(0, 2.3fr) 1fr 0.9fr 1.2fr 110px; align-items: center; gap: 12px; padding: 0 18px;
+}
+.tabela-cabecalho { min-height: 40px; font-size: 12px; font-weight: 800; color: var(--texto2); }
+.tabela-linha { min-height: 54px; border-top: 1px solid var(--divisor); font-size: 14px; }
+.tabela-linha .produto-celula-nome { font-size: 15px; }
+.tabela-linha .produto-celula-preco { color: var(--texto2); }
+.tabela-linha .btn-contorno { border-color: var(--roxo2); }
+
+/* ----- Coluna lateral ----- */
+.resumo-produtos {
+  display: flex; flex-direction: column; gap: 12px; padding: 22px;
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: 20px; box-shadow: var(--sombra-card);
+}
+.resumo-produtos h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.resumo-produtos > div { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--texto2); }
+.resumo-produtos strong { font-size: 20px; color: var(--tinta); }
+.numero-vazio { width: 32px; height: 20px; }
+.adicionar-produto { min-height: 52px; }
+.como-funciona { padding: 16px; border-radius: 14px; background: var(--roxo-claro); }
+.como-funciona h2 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+.como-funciona p { font-size: 13px; line-height: 1.5; color: var(--texto2); }
+
+/* ----- Modal: controle de estoque ----- */
+.estoque-controle { display: grid; grid-template-columns: 48px 1fr 48px; gap: 10px; }
+.estoque-controle input { text-align: center; font-size: 20px; font-weight: 800; }
+.estoque-botao {
+  display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 12px;
+  background: var(--branco); border: 1.5px solid var(--roxo2); color: var(--roxo);
+}
+.estoque-botao.cheio { background: var(--roxo); border-color: var(--roxo); color: var(--branco); }
+.topo-add { display: flex; background: none; border: 0; color: var(--branco); padding: 4px; }
+
+@media (max-width: 900px) {
+  .tabela-produtos { background: transparent; border: 0; display: flex; flex-direction: column; gap: 10px; overflow: visible; }
+  .tabela-cabecalho { display: none; }
+  .tabela-linha {
+    grid-template-columns: 1fr auto; grid-template-areas: 'nome acao' 'preco situacao' 'estoque situacao';
+    gap: 4px 12px; padding: 12px 14px; border: 1px solid var(--divisor); border-radius: 14px; background: var(--cinza);
+  }
+  .tabela-linha > :nth-child(1) { grid-area: nome; }
+  .tabela-linha > :nth-child(2) { grid-area: preco; }
+  .tabela-linha > :nth-child(3) { grid-area: estoque; }
+  .tabela-linha > :nth-child(4) { grid-area: situacao; justify-self: end; }
+  .tabela-linha > :nth-child(5) { grid-area: acao; justify-self: end; }
+  .pagina-lateral .adicionar-produto { display: none; }
+  .tabela-produtos > .tabela-linha:nth-child(n+6) { display: none; }
+}

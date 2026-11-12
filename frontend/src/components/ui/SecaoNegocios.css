@@ -1,0 +1,19 @@
+.secao-negocios-topo { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.secao-negocios-topo h2 { font-size: 24px; font-weight: 800; }
+.secao-negocios-topo .link-roxo { font-size: 14px; white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
+
+.secao-negocios-fila {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .secao-negocios-topo h2 { font-size: 16px; }
+  .secao-negocios-topo { margin-bottom: 8px; }
+  /* Carrossel horizontal no mobile */
+  .secao-negocios-fila {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity;
+    margin: 0 -16px; padding: 0 16px 4px; scrollbar-width: none;
+  }
+  .secao-negocios-fila::-webkit-scrollbar { display: none; }
+  .secao-negocios-fila > .card-negocio { flex: 0 0 min(290px, 82%); scroll-snap-align: start; }
+}

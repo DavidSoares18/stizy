@@ -1,0 +1,41 @@
+.inicio-principal { gap: 24px; }
+.inicio-titulo { margin-bottom: 20px; }
+
+/* ----- Categorias (rolam na horizontal) ----- */
+.categorias { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.categoria {
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0; width: 184px;
+  padding: 20px 14px; background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card);
+  font-size: 15px; font-weight: 800; transition: border-color .2s, box-shadow .2s;
+}
+.categoria:hover { border-color: var(--roxo2); box-shadow: var(--sombra-card); }
+.categoria-icone {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 52px; height: 52px; border-radius: 14px; background: var(--roxo-claro); color: var(--roxo2);
+}
+
+/* ----- Coluna lateral ----- */
+.inicio-lateral { position: sticky; top: 0; }
+.proximo-horario { padding: 24px; display: flex; flex-direction: column; gap: 14px; background: var(--cinza); border-radius: 20px; }
+.proximo-horario h2 { font-size: 20px; font-weight: 800; }
+.proximo-horario p { font-size: 15px; line-height: 1.5; color: var(--texto2); }
+.proximo-horario .proximo-dados strong { color: var(--tinta); }
+.proximo-horario .btn { min-height: 52px; }
+.destaque-stizy { padding: 20px 24px; border-radius: 20px; background: var(--tinta); color: var(--branco); display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.destaque-stizy p { font-size: 18px; font-weight: 800; line-height: 1.35; }
+
+
+@media (max-width: 900px) {
+  .inicio-titulo { font-size: 20px; margin-bottom: 8px; }
+
+  /* Categorias viram ícones redondos com o nome embaixo */
+  .categorias { gap: 4px; margin: 0 -16px; padding: 0 16px 4px; scrollbar-width: none; }
+  .categorias::-webkit-scrollbar { display: none; }
+  .categoria { flex-direction: column; gap: 6px; width: 76px; padding: 0; background: transparent; border: 0; font-size: 12px; font-weight: 500; text-align: center; }
+  .categoria:hover { box-shadow: none; }
+  .categoria-icone { width: 48px; height: 48px; border-radius: 50%; }
+  .categoria-icone svg { width: 22px; height: 22px; }
+
+  /* Lateral some no mobile (o "próximo horário" fica na Agenda) */
+  .inicio-lateral { display: none; }
+}
