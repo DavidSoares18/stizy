@@ -71,7 +71,7 @@ O back-end atual (`backend/`, Spring Boot, porta 8080) expõe:
 | --- | --- | --- | --- |
 | Prefixo das rotas | `/auth/login`, `/negocios`, … | `/api/auth/...` | Ajustar `API_URL` em `api.js` para terminar em `/api` **ou** usar `/api` em cada caminho. Sugestão: `const API_URL = (VITE_API_URL) + '/api'` em um único lugar. |
 | Nome do perfil | `usuario.perfil`: `'cliente'` \| `'provedor'` | `papel`: `CLIENTE` \| `PROFISSIONAL` | Mapear no `authService.js` (`PROFISSIONAL` -> `'provedor'`) ou alinhar o enum. O restante do front usa `'cliente'`/`'provedor'`. |
-| Cadastro do provedor | 7 passos (negócio, endereço, serviços, horários…) e **sem e-mail/senha** no Figma | `CadastroRequest` só tem nome, e-mail, senha, papel | Definir se a conta é criada antes (`/api/auth/cadastro`) e os demais dados vão em `POST /provedores`, ou tudo em uma chamada. |
+| Cadastro do provedor | 6 passos (negócio, endereço, serviços, horários…) e **sem e-mail/senha** no Figma | `CadastroRequest` só tem nome, e-mail, senha, papel | Definir se a conta é criada antes (`/api/auth/cadastro`) e os demais dados vão em `POST /provedores`, ou tudo em uma chamada. |
 | CORS | Front em `http://localhost:5173` | `SecurityConfig` não libera CORS | Adicionar `CorsConfigurationSource` liberando a origem do front (ou proxy no Vite). Sem isso o navegador bloqueia as chamadas. |
 | Expiração do token | Guarda o token e não renova | Expira em 120 min | Tratar `401`: o front deve voltar ao login (ponto a implementar em `api.js` quando houver a regra). |
 
@@ -111,6 +111,7 @@ Os formatos exatos de cada resposta estão nos comentários de `src/services/*.j
 | GET | `/provedor/agenda?data=AAAA-MM-DD` | `obterAgendaDoDia` |
 | GET | `/provedor/agendamentos/:id` | `obterAtendimento` |
 | PUT | `/provedor/agendamentos/:id/concluir` | `concluirAtendimento` |
+| PUT | `/provedor/agendamentos/:id/faltou` | `marcarFalta` (status `FALTOU`; rota futura) |
 | POST | `/provedor/bloqueios` | `bloquearHorario` (RF17) |
 | POST | `/provedor/ausencias` | `registrarAusencia` (RF14) |
 | GET | `/provedor/produtos` | `listarProdutosDoProvedor` |
@@ -122,8 +123,8 @@ Os formatos exatos de cada resposta estão nos comentários de `src/services/*.j
 ### 3.4 Regras que o front **não** faz (são do back-end)
 
 - Cálculo da taxa de 8%, valores líquidos e totais; permissões por perfil (o front só esconde telas — a API deve negar).
-- Bloqueio de horários concorrentes, validação de estoque, expiração do token, validação real de CPF/e-mail.
-- O front valida só o formato (máscaras de CPF, celular etc.) para ajudar o usuário; **nunca confie nele**.
+- Bloqueio de horários concorrentes, validação de estoque, expiração do token, validação real de e-mail.
+- O front valida só o formato (máscaras de celular, CEP etc.) para ajudar o usuário; **nunca confie nele**.
 
 ### 3.5 Checklist para integrar uma tela
 
@@ -143,7 +144,7 @@ orientar a modelagem (nomes sugestivos; o modelo final é do Ian). Já existe a 
 
 | Entidade | Campos que a interface usa |
 | --- | --- |
-| **Usuário** (existe) | id, nome, email, senha (hash), papel (cliente/profissional), foto (opcional), cpf, celular, bairro, cidade, aceitou termos (LGPD, RNF06) |
+| **Usuário** (existe) | id, nome, email, senha (hash), papel (cliente/profissional), foto (opcional), celular, bairro, cidade, aceitou termos (LGPD, RNF06) |
 | **Negócio / Provedor** | id, usuário, nome, categoria, tipo (`horario` / `combinar` / `produtos`), endereço, latitude/longitude (para "distância km"), aberto/horário de fechamento, aceita pagamento pelo STIZY, tempo de entrega, retirada na loja, nota média |
 | **Serviço** | id, negócio, nome, duração (min, pode ser nula), preço (pode ser nulo), "a combinar" |
 | **Produto** | id, negócio, nome, descrição, preço, **estoque** (inteiro ≥ 0), "feito na hora" |
@@ -156,20 +157,20 @@ orientar a modelagem (nomes sugestivos; o modelo final é do Ian). Já existe a 
 | **Conversa / Mensagem** | participantes, texto, enviada em (UTC), lida |
 | **Notificação** | usuário, tipo (agendamento/pedido/mensagem), título, descrição, lida |
 | **Taxa mensal (folha)** | negócio, referência (AAAA-MM), valor (8% dos ganhos), vencimento, paga |
-| **Rascunho de cadastro** | usuário/e-mail, JSON do passo atual (cadastro de provedor em 7 passos) |
+| **Rascunho de cadastro** | usuário/e-mail, JSON do passo atual (cadastro de provedor em 6 passos) |
 
 Pontos de atenção para o banco:
 
 - Guardar **datas em UTC** (`timestamptz`); o front converte para o fuso local.
 - Índices em (negócio, início) de agendamentos e em categoria/localização de negócios (busca e "perto de você").
 - Transações ao criar agendamento/pedido (estoque e horário não podem ficar inconsistentes).
-- Dados pessoais (CPF, celular) só o essencial e com proteção adequada (LGPD, RNF06).
+- Dados pessoais (celular, bairro, cidade) só o essencial e com proteção adequada (LGPD, RNF06). **O front não coleta nem envia CPF/CNPJ.**
 
 ---
 
 ## 5. Perguntas em aberto (alinhar em equipe)
 
-1. Cadastro de provedor: a conta (e-mail/senha) é criada antes dos 7 passos ou junto? (o Figma não tem esses campos)
+1. Cadastro de provedor: a conta (e-mail/senha) é criada antes dos 6 passos ou junto? (o Figma não tem esses campos)
 2. `papel`: manter `PROFISSIONAL` no back-end e mapear para `provedor` no front, ou renomear?
 3. Chat em tempo real: WebSocket, SSE ou apenas consulta periódica?
 4. Fluxo de pagamento por QR/Pix: qual provedor de pagamento e como o status chega (webhook + consulta)?

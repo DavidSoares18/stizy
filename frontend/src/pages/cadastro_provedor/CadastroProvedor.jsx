@@ -8,7 +8,8 @@ import { useAuth } from '../../context/AuthContext';
 import { cadastrarProvedor, salvarRascunhoProvedor } from '../../services/authService';
 import { STORAGE_KEYS } from '../../constants/storage';
 import { ROTAS } from '../../constants/rotas';
-import { mascaraCep, mascaraCnpj, mascaraCpf } from '../../utils/formatters';
+import { mascaraCep } from '../../utils/formatters';
+import { CATEGORIAS } from '../../constants/categorias';
 import './CadastroProvedor.css';
 
 const PASSOS = [
@@ -18,7 +19,6 @@ const PASSOS = [
     { titulo: 'Dias e horários', descricao: 'Quando você atende' },
     { titulo: 'Atendimento e pagamentos', descricao: 'Como você atende e recebe' },
     { titulo: 'Localização', descricao: 'Onde você atende' },
-    { titulo: 'CPF ou CNPJ', descricao: 'Verificação do cadastro' },
 ];
 
 const TITULOS = [
@@ -28,11 +28,11 @@ const TITULOS = [
     ['Dias e horários', 'Quando você atende'],
     ['Atendimento e pagamentos', 'Como você atende e recebe'],
     ['Localização', 'Onde você atende'],
-    ['CPF ou CNPJ', 'Verificação do cadastro'],
 ];
 
-const TIPOS_SERVICO = ['Barbeiro', 'Salão de beleza', 'Encanador', 'Eletricista', 'Marido de aluguel', 'Manicure e estética', 'Mecânico', 'Limpeza e diarista', 'Outro'];
-const TIPOS_PRODUTO = ['Mercado', 'Padaria', 'Gás e água', 'Comida e bebida', 'Farmácia', 'Pet shop', 'Outro'];
+// Categorias vêm de constants/categorias.js (mesmos slugs usados na tela inicial e salvos no banco)
+const CATEGORIAS_PRODUTO = CATEGORIAS.filter((c) => c.tipoPadrao === 'produtos');
+const CATEGORIAS_SERVICO = CATEGORIAS.filter((c) => c.tipoPadrao !== 'produtos');
 const DIAS = [['seg', 'Seg'], ['ter', 'Ter'], ['qua', 'Qua'], ['qui', 'Qui'], ['sex', 'Sex'], ['sab', 'Sáb'], ['dom', 'Dom']];
 const DURACOES = ['15 min', '20 min', '30 min', '45 min', '1 hora', 'Outro'];
 
@@ -41,14 +41,13 @@ const novoItem = () => ({ id: proximoId++, nome: '', duracao: '', duracaoACombin
 
 const DADOS_INICIAIS = {
     nomeNegocio: '', descricao: '',
-    oferece: 'servicos', tipoNegocio: '',
+    oferece: 'servicos', categoria: '',
     itens: [novoItem()],
     dias: ['seg', 'ter', 'qua', 'qui', 'sex', 'sab'], abre: '08:00', fecha: '18:00',
     temIntervalo: true, intervaloDe: '12:00', intervaloAte: '13:00',
     atendimento: 'marcado', duracaoPadrao: '30 min',
     pagamentoStizy: true,
     localTipo: 'fixo', cep: '', rua: '', bairro: '', cidade: '', complemento: '',
-    documentoTipo: 'cpf', documento: '',
 };
 
 /** Recupera o rascunho salvo em "Salvar e continuar depois" */
@@ -58,7 +57,11 @@ function lerRascunho() {
         if (salvo?.dados) {
             // garante que os próximos ids de item não repitam
             proximoId = Math.max(proximoId, ...salvo.dados.itens.map((i) => i.id + 1));
-            return { dados: { ...DADOS_INICIAIS, ...salvo.dados }, passo: salvo.passo || 0 };
+            // rascunhos antigos: descarta CPF/CNPJ (LGPD) e o tipo de negócio em texto livre
+            const { documento, documentoTipo, tipoNegocio, ...resto } = salvo.dados; // eslint-disable-line no-unused-vars
+            const dados = { ...DADOS_INICIAIS, ...resto };
+            if (!CATEGORIAS.some((c) => c.slug === dados.categoria)) dados.categoria = '';
+            return { dados, passo: Math.min(salvo.passo || 0, PASSOS.length - 1) };
         }
     } catch { /* sem rascunho */ }
     return { dados: DADOS_INICIAIS, passo: 0 };
@@ -79,7 +82,8 @@ function Interruptor({ ligado, onMudar, rotulo }) {
 }
 
 /**
- * Cadastro do provedor em 7 passos (RF01, RF03, RF04, RF11).
+ * Cadastro do provedor em 6 passos (RF01, RF03, RF04, RF11).
+ * RNF06 (LGPD): não coletamos CPF nem CNPJ.
  * "Salvar e continuar depois" guarda um rascunho (localStorage hoje;
  * BACKEND: PUT /provedores/rascunho via authService.salvarRascunhoProvedor).
  */
@@ -124,7 +128,7 @@ function CadastroProvedor() {
                 if (!dados.nomeNegocio.trim()) novos.nomeNegocio = 'Informe o nome do seu serviço ou negócio.';
                 break;
             case 1:
-                if (!dados.tipoNegocio) novos.tipoNegocio = 'Escolha o tipo de negócio.';
+                if (!dados.categoria) novos.categoria = 'Escolha a categoria do negócio.';
                 break;
             case 2: {
                 const validos = dados.itens.filter((i) => i.nome.trim());
@@ -154,12 +158,6 @@ function CadastroProvedor() {
                     if (!dados.cidade.trim()) novos.cidade = 'Informe cidade e UF.';
                 }
                 break;
-            case 6: {
-                const tamanho = dados.documento.replace(/\D/g, '').length;
-                if (dados.documentoTipo === 'cpf' && tamanho !== 11) novos.documento = 'CPF deve ter 11 dígitos.';
-                if (dados.documentoTipo === 'cnpj' && tamanho !== 14) novos.documento = 'CNPJ deve ter 14 dígitos.';
-                break;
-            }
             default:
         }
         setErros(novos);
@@ -243,21 +241,21 @@ function CadastroProvedor() {
                     <>
                         <p className="titulo-grupo">O que você oferece?</p>
                         <div className="opcoes-linha" role="radiogroup" aria-label="O que você oferece">
-                            <OpcaoCartao ativo={!ehProduto} onClick={() => { atualizar('oferece', 'servicos'); atualizar('tipoNegocio', ''); }}
+                            <OpcaoCartao ativo={!ehProduto} onClick={() => { atualizar('oferece', 'servicos'); atualizar('categoria', ''); }}
                                 titulo="Serviços" descricao="Mão de obra: corte, reparo, instalação, atendimento..." />
-                            <OpcaoCartao ativo={ehProduto} onClick={() => { atualizar('oferece', 'produtos'); atualizar('tipoNegocio', ''); }}
+                            <OpcaoCartao ativo={ehProduto} onClick={() => { atualizar('oferece', 'produtos'); atualizar('categoria', ''); }}
                                 titulo="Produtos" descricao="Comida, bebida, gás, mercearia, roupas..." />
                         </div>
-                        <p className="titulo-grupo">Tipo de negócio</p>
+                        <p className="titulo-grupo">Categoria do negócio</p>
                         <div className="chips-linha">
-                            {(ehProduto ? TIPOS_PRODUTO : TIPOS_SERVICO).map((tipo) => (
-                                <button key={tipo} type="button" className={`chip ${dados.tipoNegocio === tipo ? 'ativo' : ''}`}
-                                    aria-pressed={dados.tipoNegocio === tipo} onClick={() => atualizar('tipoNegocio', tipo)}>
-                                    {tipo}
+                            {(ehProduto ? CATEGORIAS_PRODUTO : CATEGORIAS_SERVICO).map((cat) => (
+                                <button key={cat.slug} type="button" className={`chip ${dados.categoria === cat.slug ? 'ativo' : ''}`}
+                                    aria-pressed={dados.categoria === cat.slug} onClick={() => atualizar('categoria', cat.slug)}>
+                                    {cat.nome}
                                 </button>
                             ))}
                         </div>
-                        {erro('tipoNegocio')}
+                        {erro('categoria')}
                     </>
                 )}
 
@@ -455,27 +453,7 @@ function CadastroProvedor() {
                     </>
                 )}
 
-                {/* ---------- 7. CPF ou CNPJ ---------- */}
-                {passo === 6 && (
-                    <>
-                        <p className="titulo-grupo">Você é pessoa física ou empresa?</p>
-                        <div className="opcoes-linha" role="radiogroup" aria-label="Tipo de documento">
-                            <OpcaoCartao ativo={dados.documentoTipo === 'cpf'} onClick={() => { atualizar('documentoTipo', 'cpf'); atualizar('documento', ''); }}
-                                titulo="CPF" descricao="Pessoa física: autônomo ou prestador individual." />
-                            <OpcaoCartao ativo={dados.documentoTipo === 'cnpj'} onClick={() => { atualizar('documentoTipo', 'cnpj'); atualizar('documento', ''); }}
-                                titulo="CNPJ" descricao="Empresa ou MEI." />
-                        </div>
-                        <div className="campo documento">
-                            <label htmlFor="cp-doc">Número do {dados.documentoTipo === 'cpf' ? 'CPF' : 'CNPJ'}</label>
-                            <input id="cp-doc" inputMode="numeric" value={dados.documento}
-                                placeholder={dados.documentoTipo === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
-                                onChange={(e) => atualizar('documento', dados.documentoTipo === 'cpf' ? mascaraCpf(e.target.value) : mascaraCnpj(e.target.value))} />
-                            {erro('documento')}
-                        </div>
-                        <p className="campo-ajuda">Usamos o documento para verificar o cadastro. Ele não aparece para os clientes.</p>
-                        {erroGeral && <p className="campo-erro" role="alert">{erroGeral}</p>}
-                    </>
-                )}
+                {erroGeral && <p className="campo-erro" role="alert">{erroGeral}</p>}
             </CadastroLayout>
 
             {/* Modal: cadastro concluído */}

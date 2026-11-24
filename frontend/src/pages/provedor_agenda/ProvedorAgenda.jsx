@@ -3,7 +3,7 @@ import { Calendar, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import TopoMobile from '../../components/layout/TopoMobile';
 import Modal from '../../components/ui/Modal';
 import useDados from '../../hooks/useDados';
-import { bloquearHorario, concluirAtendimento, obterAgendaDoDia, registrarAusencia } from '../../services/provedorService';
+import { bloquearHorario, concluirAtendimento, marcarFalta, obterAgendaDoDia, registrarAusencia } from '../../services/provedorService';
 import { formatarMoeda, rotuloDiaCurto, tituloDiaAgenda } from '../../utils/formatters';
 import './ProvedorAgenda.css';
 
@@ -63,6 +63,17 @@ function ProvedorAgenda() {
             recarregar();
         } catch {
             setErroAcao('Não foi possível concluir o atendimento. Tente novamente.');
+        }
+    };
+
+    const registrarFalta = async () => {
+        setErroAcao('');
+        try {
+            await marcarFalta(atendimento.agendamentoId);
+            setAtendimento(null);
+            recarregar();
+        } catch {
+            setErroAcao('Não foi possível registrar a falta. Tente novamente.');
         }
     };
 
@@ -180,6 +191,7 @@ function ProvedorAgenda() {
                 </dl>
                 <div className="modal-acoes">
                     <button type="button" className="btn btn-contorno" onClick={() => setAtendimento(null)}>Fechar</button>
+                    <button type="button" className="btn btn-contorno forte" onClick={registrarFalta}>Cliente faltou</button>
                     <button type="button" className="btn btn-primario" onClick={concluir}>Concluir atendimento</button>
                 </div>
             </Modal>

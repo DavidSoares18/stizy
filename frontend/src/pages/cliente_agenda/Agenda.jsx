@@ -22,6 +22,18 @@ function SeloPagamento({ pagamento, tipo }) {
     return <span className="selo">{tipo === 'entrega' ? 'Pagar na entrega' : 'Pagar no local'}</span>;
 }
 
+/** Situação de um agendamento já passado: Concluído, Cancelado ou Faltou */
+const STATUS_ANTERIOR = {
+    concluido: { rotulo: 'Concluído', classe: 'selo' },
+    cancelado: { rotulo: 'Cancelado', classe: 'selo selo-tinta' },
+    faltou: { rotulo: 'Faltou', classe: 'selo selo-amarelo' },
+};
+
+function SeloStatus({ status }) {
+    const info = STATUS_ANTERIOR[status];
+    return info ? <span className={info.classe}>{info.rotulo}</span> : null;
+}
+
 /** Linha vazia (sem dados do backend) */
 function LinhaVazia() {
     return (
@@ -110,6 +122,7 @@ function Agenda() {
                                     <strong>{ag.titulo}</strong>
                                     <span>{ag.negocioNome} · {formatarDataHora(ag.inicioUtc, { day: '2-digit', month: 'short' })} · {formatarMoeda(ag.valor)}</span>
                                 </span>
+                                <SeloStatus status={ag.status} />
                                 <span className="agenda-acoes">
                                     <button type="button" className="btn btn-contorno forte btn-pequeno" onClick={() => navigate(ROTAS.ESTABELECIMENTO(ag.negocioId))}>Agendar de novo</button>
                                 </span>

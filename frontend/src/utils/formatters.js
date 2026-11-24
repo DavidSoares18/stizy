@@ -67,19 +67,6 @@ export const mesPorExtenso = (data) =>
     new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(data);
 
 /** Máscaras simples para formulários de cadastro */
-export const mascaraCpf = (v = '') =>
-    v.replace(/\D/g, '').slice(0, 11)
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-
-export const mascaraCnpj = (v = '') =>
-    v.replace(/\D/g, '').slice(0, 14)
-        .replace(/(\d{2})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1/$2')
-        .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
-
 export const mascaraCelular = (v = '') =>
     v.replace(/\D/g, '').slice(0, 11)
         .replace(/(\d{2})(\d)/, '($1) $2')

@@ -6,16 +6,16 @@ import FotoUpload from '../../components/cadastro/FotoUpload';
 import Modal from '../../components/ui/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { cadastrarCliente } from '../../services/authService';
-import { mascaraCelular, mascaraCpf } from '../../utils/formatters';
+import { mascaraCelular } from '../../utils/formatters';
 import { ROTAS } from '../../constants/rotas';
 
 const PASSOS = [
-    { titulo: 'Seus dados', descricao: 'Nome, CPF e contato' },
+    { titulo: 'Seus dados', descricao: 'Nome e contato' },
     { titulo: 'Acesso e segurança', descricao: 'Senha e endereço' },
 ];
 
 const DADOS_INICIAIS = {
-    nome: '', cpf: '', celular: '', email: '',
+    nome: '', celular: '', email: '',
     bairro: '', cidade: '', senha: '', confirmarSenha: '', aceitouTermos: false,
 };
 
@@ -45,7 +45,6 @@ function CadastroCliente() {
         const novos = {};
         if (passo === 0) {
             if (dados.nome.trim().split(/\s+/).length < 2) novos.nome = 'Informe nome e sobrenome.';
-            if (dados.cpf.replace(/\D/g, '').length !== 11) novos.cpf = 'CPF deve ter 11 dígitos.';
             if (dados.celular.replace(/\D/g, '').length < 10) novos.celular = 'Informe DDD e número.';
             if (!/^\S+@\S+\.\S+$/.test(dados.email)) novos.email = 'Digite um e-mail válido.';
         } else {
@@ -115,19 +114,11 @@ function CadastroCliente() {
                                 onChange={(e) => atualizar('nome', e.target.value)} />
                             {erro('nome')}
                         </div>
-                        <div className="linha">
-                            <div className="campo">
-                                <label htmlFor="cc-cpf">CPF</label>
-                                <input id="cc-cpf" value={dados.cpf} placeholder="000.000.000-00" inputMode="numeric"
-                                    onChange={(e) => atualizar('cpf', mascaraCpf(e.target.value))} />
-                                {erro('cpf')}
-                            </div>
-                            <div className="campo">
-                                <label htmlFor="cc-celular">Celular (WhatsApp)</label>
-                                <input id="cc-celular" value={dados.celular} placeholder="(81) 90000-0000" inputMode="tel" autoComplete="tel"
-                                    onChange={(e) => atualizar('celular', mascaraCelular(e.target.value))} />
-                                {erro('celular')}
-                            </div>
+                        <div className="campo">
+                            <label htmlFor="cc-celular">Celular (WhatsApp)</label>
+                            <input id="cc-celular" value={dados.celular} placeholder="(81) 90000-0000" inputMode="tel" autoComplete="tel"
+                                onChange={(e) => atualizar('celular', mascaraCelular(e.target.value))} />
+                            {erro('celular')}
                         </div>
                         <div className="campo">
                             <label htmlFor="cc-email">E-mail</label>
