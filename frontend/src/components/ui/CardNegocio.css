@@ -1,0 +1,35 @@
+.card-negocio {
+  display: flex; align-items: center; gap: 16px; min-width: 0;
+  padding: 16px; background: var(--cinza); border: 1px solid var(--divisor);
+  border-radius: var(--raio-card);
+  transition: border-color .2s, box-shadow .2s, transform .15s;
+}
+.card-negocio:hover { border-color: var(--roxo2); box-shadow: var(--sombra-card); transform: translateY(-1px); }
+
+.card-negocio-texto { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.card-negocio-nome { font-size: 18px; font-weight: 800; line-height: 1.25; }
+.card-negocio-sub { font-size: 13px; color: var(--texto2); }
+.card-negocio-selos { display: flex; gap: 8px; margin-top: 4px; }
+.card-negocio-seta { color: var(--tinta); flex-shrink: 0; }
+
+/* Nota lateral: só aparece no mobile (carrossel) e sempre na lista */
+.card-negocio .lateral { display: none; }
+
+/* ----- Variante lista (Resultados/Busca) ----- */
+.card-negocio.lista .card-negocio-selos { display: none; }
+.card-negocio.lista .lateral { display: inline-flex; }
+.card-negocio.lista .card-negocio-nome { font-size: 17px; }
+
+/* ----- Card vazio ----- */
+.card-negocio.vazio .linha-nome { width: 70%; height: 16px; margin-bottom: 4px; }
+.card-negocio.vazio .linha-sub { width: 45%; height: 12px; }
+.card-negocio.vazio .selo-vazio { width: 72px; height: 22px; border-radius: 999px; }
+.card-negocio.vazio.lista .selo-vazio:not(.lateral) { display: none; }
+
+@media (max-width: 900px) {
+  .card-negocio { padding: 12px; }
+  .card-negocio-nome { font-size: 16px; }
+  .card-negocio.carrossel .card-negocio-selos { display: none; }
+  .card-negocio.carrossel .lateral { display: inline-flex; }
+  .card-negocio.vazio.carrossel .card-negocio-selos { display: none; }
+}

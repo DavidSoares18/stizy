@@ -1,0 +1,50 @@
+.agendar-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.agendar-titulo { margin-top: 4px; }
+.voltar-link {
+  display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 0;
+  color: var(--roxo); font-size: 15px; font-weight: 800;
+}
+.voltar-link:hover { text-decoration: underline; }
+
+.agendar-servico {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px;
+  background: var(--roxo-claro); font-size: 14px;
+}
+.agendar-servico svg { color: var(--roxo2); }
+
+/* ----- Seletor de dia ----- */
+.dias { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; }
+.dia {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: 72px; border-radius: 14px; background: var(--cinza); border: 1px solid var(--divisor);
+  color: var(--texto2); font-size: 14px; transition: background-color .2s, border-color .2s, color .2s;
+}
+.dia strong { font-size: 24px; color: var(--tinta); line-height: 1.1; }
+.dia:hover { border-color: var(--roxo2); }
+.dia.ativo { background: var(--roxo); border-color: var(--roxo); color: var(--branco); }
+.dia.ativo strong { color: var(--branco); }
+
+/* ----- Horários ----- */
+.horarios-topo { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.horarios-topo h2 { font-size: 18px; font-weight: 800; }
+.horarios-legenda { font-size: 13px; color: var(--texto2); }
+.horarios { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.horario {
+  min-height: 52px; border-radius: 12px; background: var(--branco); border: 1.5px solid var(--borda-campo);
+  color: var(--tinta); font-size: 16px; font-weight: 800; transition: background-color .2s, border-color .2s;
+}
+.horario:hover:not(:disabled) { border-color: var(--roxo); }
+.horario.ativo { background: var(--roxo); border-color: var(--roxo); color: var(--branco); }
+.horario.ocupado { background: var(--cinza); border-color: var(--divisor); color: var(--texto2); text-decoration: line-through; cursor: not-allowed; }
+.horarios-aviso { font-size: 12px; color: var(--texto2); }
+
+@media (max-width: 900px) {
+  .agendar-topo { display: none; }
+  .agendar-titulo { font-size: 18px; margin: 0; }
+  .dias { gap: 6px; }
+  .dia { min-height: 64px; font-size: 12px; border-radius: 12px; }
+  .dia strong { font-size: 18px; }
+  .horarios { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .horario { min-height: 48px; }
+  .horarios-topo h2 { font-size: 17px; }
+}

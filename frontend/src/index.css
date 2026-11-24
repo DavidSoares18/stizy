@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================================
+   TOKENS DO FIGMA (Página 3 - "Como eu faria")
+   Cada cor da marca ganha um papel (contraste WCAG AA):
+   - roxo       : ação e identidade (botões, links, cabeçalho)
+   - roxo2      : apoio gráfico (ícones, contornos). Nunca texto pequeno
+   - amarelo    : destaque (selos, seleção). Texto dentro dele é sempre tinta
+   - ouro       : detalhe (estrelas) só sobre tinta
+   - tinta      : todo o texto
+   ========================================================== */
+:root {
+  --roxo: #56067f;
+  --roxo2: #9f4bf2;
+  --amarelo: #ffd352;
+  --ouro: #d5aa2a;
+  --tinta: #1e0a2e;
+  --texto2: #4b4b57;
+  --roxo-claro: #ececf1;
+  --cinza: #f4f4f7;
+  --divisor: #e0e0e6;
+  --branco: #ffffff;
+  --borda-campo: #767680;
+
+  --altura-header: 72px;
+  --altura-nav-mobile: 72px;
+  --raio-card: 16px;
+  --raio-botao: 12px;
+  --sombra-card: 0 8px 28px rgba(86, 6, 127, 0.1);
+  --sombra-modal: 0 20px 60px rgba(30, 10, 46, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--tinta);
+  background: var(--branco);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p { margin: 0; }
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+
+:focus-visible { outline: 3px solid var(--roxo2); outline-offset: 2px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 20px; border-radius: var(--raio-botao);
+  border: 2px solid transparent; font-size: 15px; font-weight: 700;
+  transition: background-color .2s, color .2s, border-color .2s, transform .1s, box-shadow .2s;
+}
+.btn:active:not(:disabled) { transform: scale(0.98); }
+.btn-primario { background: var(--roxo); color: var(--branco); }
+.btn-primario:hover:not(:disabled) { background: #6a0a99; }
+.btn-contorno { background: var(--branco); color: var(--roxo); border-color: var(--roxo2); }
+.btn-contorno.forte { border-color: var(--roxo); }
+.btn-contorno:hover:not(:disabled) { background: var(--cinza); }
+.btn-escuro { background: var(--tinta); color: var(--branco); }
+.btn-escuro:hover:not(:disabled) { background: #33174a; }
+.btn-amarelo { background: var(--amarelo); color: var(--tinta); }
+.btn-amarelo:hover:not(:disabled) { background: #ffdb73; }
+.btn-bloco { width: 100%; }
+.btn-pequeno { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.btn:disabled {
+  background: var(--cinza); color: var(--borda-campo);
+  border-color: var(--divisor); cursor: not-allowed;
+}
+
+.link-roxo { color: var(--roxo); font-weight: 700; background: none; border: 0; padding: 0; font-size: inherit; }
+.link-roxo:hover { text-decoration: underline; }
+
+/* ---------- Selos / chips ---------- */
+.selo {
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 24px; padding: 0 10px; border-radius: 999px;
+  background: var(--roxo-claro); color: var(--tinta);
+  font-size: 12px; font-weight: 700; white-space: nowrap;
+}
+.selo-amarelo { background: var(--amarelo); }
+.selo-tinta { background: var(--tinta); color: var(--branco); }
+.selo-nota { background: var(--tinta); color: var(--branco); }
+.selo-nota svg { color: var(--ouro); fill: var(--ouro); }
+
+.chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 0 18px; border-radius: 999px;
+  border: 1.5px solid var(--borda-campo); background: var(--branco);
+  color: var(--tinta); font-size: 14px; font-weight: 700;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.chip:hover { border-color: var(--roxo); }
+.chip.ativo { background: var(--roxo); border-color: var(--roxo); color: var(--branco); }
+
+/* ---------- Cartões e campos ---------- */
+.cartao {
+  background: var(--cinza); border: 1px solid var(--divisor);
+  border-radius: var(--raio-card);
+}
+
+.campo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.campo > label, .campo-rotulo { font-size: 13px; font-weight: 700; color: var(--tinta); }
+.campo-entrada { position: relative; display: flex; align-items: center; }
+.campo-entrada > svg {
+  position: absolute; left: 16px; width: 20px; height: 20px;
+  color: var(--tinta); pointer-events: none;
+}
+.campo input, .campo textarea, .campo select {
+  width: 100%; min-height: 52px; padding: 0 16px;
+  border: 1.5px solid var(--borda-campo); border-radius: var(--raio-botao);
+  background: var(--branco); color: var(--tinta); font-size: 15px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.campo textarea { padding: 14px 16px; min-height: 120px; resize: none; }
+.campo-entrada > svg + input { padding-left: 46px; }
+.campo input::placeholder, .campo textarea::placeholder { color: var(--texto2); opacity: .75; }
+.campo input:focus, .campo textarea:focus, .campo select:focus {
+  outline: none; border-color: var(--roxo); box-shadow: 0 0 0 3px rgba(159, 75, 242, 0.25);
+}
+.campo-erro { font-size: 12px; font-weight: 600; color: #b3261e; }
+.campo-ajuda { font-size: 12px; color: var(--texto2); }
+
+/* ---------- Esqueleto (cards vazios) ----------
+   Enquanto o backend não preenche os dados, os cards aparecem vazios
+   com estas barras cinzas. Quando "carregando" está ativo, pulsam. */
+.esqueleto { display: block; background: var(--roxo-claro); border-radius: 8px; }
+.carregando .esqueleto { animation: pulsar 1.2s ease-in-out infinite; }
+@keyframes pulsar { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+.aviso-erro { padding: 12px 16px; border-radius: 12px; background: var(--roxo-claro); font-size: 14px; }
+
+/* Utilitários: mostram um elemento só no desktop ou só no mobile (breakpoint 900px) */
+@media (min-width: 901px) { .so-mobile { display: none !important; } }
+@media (max-width: 900px) { .so-desktop { display: none !important; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

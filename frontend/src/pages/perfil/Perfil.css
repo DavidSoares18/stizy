@@ -1,0 +1,30 @@
+.perfil-cartao {
+  display: flex; align-items: center; gap: 16px; padding: 16px;
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card);
+}
+.perfil-dados { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--texto2); }
+.perfil-dados h2 { font-size: 22px; font-weight: 800; color: var(--tinta); }
+.perfil-dados small { font-size: 12px; }
+.perfil-sair { align-self: flex-start; min-height: 44px; }
+
+.perfil-atalhos-titulo { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 4px; }
+.perfil-atalhos { background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card); overflow: hidden; }
+.perfil-atalhos li + li { border-top: 1px solid var(--divisor); }
+.perfil-atalho {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; background: transparent;
+  border: 0; text-align: left; font-size: 14px; font-weight: 500; color: var(--tinta);
+  transition: background-color .2s;
+}
+.perfil-atalho:hover { background: var(--roxo-claro); }
+.perfil-atalho > svg:last-child { margin-left: auto; }
+.perfil-atalho-icone {
+  display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;
+  border-radius: 8px; background: var(--branco); color: var(--roxo2);
+}
+
+@media (max-width: 900px) {
+  .perfil-atalhos-titulo { font-size: 18px; }
+  .perfil-cartao { flex-wrap: wrap; }
+  .perfil-cartao .btn { flex-basis: 100%; }
+  .perfil-sair { width: 100%; order: 2; }
+}

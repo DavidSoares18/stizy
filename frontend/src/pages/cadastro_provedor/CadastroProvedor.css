@@ -1,0 +1,47 @@
+/* Estilos específicos do cadastro de provedor (o resto está em CadastroLayout.css) */
+
+.cadastro-cartao .contador { text-align: right; margin-top: -4px; }
+
+/* Passo 3: linhas de serviço/produto */
+.itens-lista { display: flex; flex-direction: column; gap: 12px; }
+.item-linha {
+  position: relative; display: grid; gap: 16px; align-items: end; padding: 14px 16px;
+  background: var(--branco); border: 1px solid var(--divisor); border-radius: 14px;
+}
+.item-linha.servico { grid-template-columns: minmax(0, 1fr) 190px 190px; }
+.item-linha.produto { grid-template-columns: minmax(0, 1fr) 160px 140px; }
+.item-linha:has(.item-remover) { padding-right: 56px; }
+.campo-topo { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 26px; }
+.a-combinar { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--texto2); }
+.item-linha input:disabled { background: var(--cinza); border-style: dashed; }
+.item-remover {
+  position: absolute; right: 12px; bottom: 18px; display: flex; padding: 8px; border: 0;
+  border-radius: 8px; background: transparent; color: var(--texto2);
+}
+.item-remover:hover { background: var(--roxo-claro); color: var(--roxo); }
+.adicionar-item { align-self: flex-start; }
+
+/* Passo 4: intervalo */
+.intervalo-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.intervalo-topo strong { display: block; font-size: 14px; }
+.intervalo-topo small { font-size: 12px; color: var(--texto2); }
+
+/* Passo 5: duas colunas */
+.duas-colunas { align-items: start; gap: 32px; }
+.coluna-opcoes { display: flex; flex-direction: column; gap: 12px; }
+
+/* Passo 6: CEP menor que a rua */
+.cadastro-cartao .linha-cep { grid-template-columns: 200px 1fr; }
+.cadastro-cartao .linha.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* Passo 7 */
+.campo.documento { max-width: 340px; }
+
+@media (max-width: 900px) {
+  .item-linha.servico, .item-linha.produto { grid-template-columns: 1fr; }
+  .item-linha { padding: 14px; }
+  .item-linha:has(.item-remover) { padding-right: 14px; padding-bottom: 56px; }
+  .item-remover { bottom: 12px; }
+  .cadastro-cartao .linha-cep, .cadastro-cartao .linha.tres { grid-template-columns: 1fr; }
+  .duas-colunas { gap: 20px; }
+}

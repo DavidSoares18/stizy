@@ -1,0 +1,4 @@
+.telas-ajuda { font-size: 14px; color: var(--texto2); max-width: 640px; }
+.telas-grupo { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+.telas-lista { display: flex; flex-wrap: wrap; gap: 10px; }
+.telas-lista .btn { justify-content: flex-start; }

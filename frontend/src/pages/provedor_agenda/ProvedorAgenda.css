@@ -1,0 +1,76 @@
+.agenda-prov-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.agenda-prov-titulo { font-size: 32px; }
+.agenda-prov-setas { display: flex; gap: 8px; }
+.icone-botao {
+  display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border-radius: 10px; background: var(--branco); border: 1.5px solid var(--borda-campo); color: var(--roxo);
+  transition: background-color .2s, border-color .2s;
+}
+.icone-botao:hover { background: var(--cinza); border-color: var(--roxo); }
+
+/* ----- Lista de horários ----- */
+.agenda-prov-lista {
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: var(--raio-card); overflow: hidden;
+}
+.agenda-prov-linha { display: flex; align-items: center; gap: 20px; min-height: 56px; padding: 0 18px; }
+.agenda-prov-linha + .agenda-prov-linha { border-top: 1px solid var(--divisor); }
+.agenda-prov-linha.vazia { min-height: 62px; }
+.agenda-prov-hora { width: 54px; flex-shrink: 0; font-size: 16px; font-weight: 800; color: var(--roxo); }
+.agenda-prov-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--texto2); }
+.agenda-prov-info strong { font-size: 15px; color: var(--tinta); }
+.agenda-prov-info.livre-texto { font-size: 15px; }
+.agenda-prov-ocupado {
+  display: flex; align-items: center; gap: 20px; width: 100%; min-height: 56px; padding: 8px 0;
+  background: transparent; border: 0; text-align: left; color: inherit;
+}
+.agenda-prov-ocupado:hover .agenda-prov-info strong { color: var(--roxo); }
+.agenda-prov-linha:has(.agenda-prov-ocupado) { padding: 0 18px; }
+.agenda-prov-linha .btn-contorno { border-color: var(--roxo2); }
+
+/* ----- Coluna lateral ----- */
+.agenda-prov-resumo {
+  display: flex; flex-direction: column; gap: 12px; padding: 22px;
+  background: var(--cinza); border: 1px solid var(--divisor); border-radius: 20px; box-shadow: var(--sombra-card);
+}
+.agenda-prov-resumo h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.agenda-prov-resumo > div { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--texto2); }
+.agenda-prov-resumo strong { font-size: 20px; color: var(--tinta); }
+.numero-vazio { width: 44px; height: 20px; }
+
+.agenda-prov-proximo { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px 22px; border-radius: 20px; background: var(--tinta); color: var(--branco); }
+.agenda-prov-proximo h2 { font-size: 22px; font-weight: 800; }
+.agenda-prov-proximo p { font-size: 14px; }
+.agenda-prov-proximo .esqueleto { background: rgba(255, 255, 255, .15); }
+
+/* ----- Modais ----- */
+.detalhes { display: flex; flex-direction: column; gap: 8px; margin: 0 0 8px; font-size: 13px; }
+.detalhes > div { display: flex; justify-content: space-between; gap: 16px; }
+.detalhes dt { color: var(--texto2); }
+.detalhes dd { margin: 0; font-weight: 800; text-align: right; }
+.periodo-datas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+@media (max-width: 900px) {
+  .agenda-prov-titulo { font-size: 18px; }
+  .agenda-prov-topo { justify-content: space-between; }
+  .agenda-prov-topo .agenda-prov-titulo { order: 2; flex: 1; text-align: center; }
+  .agenda-prov-setas { display: contents; }
+  .agenda-prov-setas .icone-botao:first-child { order: 1; }
+  .agenda-prov-setas .icone-botao:last-child { order: 3; }
+
+  .agenda-prov-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .agenda-prov-stats > div {
+    display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px;
+    background: var(--branco); border: 1px solid var(--divisor); font-size: 11px; color: var(--texto2);
+  }
+  .agenda-prov-stats strong { font-size: 20px; color: var(--tinta); }
+
+  .agenda-prov-lista { background: transparent; border: 0; display: flex; flex-direction: column; gap: 10px; overflow: visible; }
+  .agenda-prov-linha, .agenda-prov-linha:has(.agenda-prov-ocupado) {
+    padding: 0 14px; border: 1px solid var(--divisor); border-radius: 14px; background: var(--cinza);
+  }
+  .agenda-prov-linha + .agenda-prov-linha { border-top: 1px solid var(--divisor); }
+  .agenda-prov-linha.livre { background: var(--branco); border: 1.5px dashed var(--borda-campo); min-height: 60px; }
+  .agenda-prov-ocupado { gap: 12px; }
+  .agenda-prov-lista > .vazia:nth-child(n+6) { display: none; }
+  .agenda-prov-hora { width: auto; min-width: 48px; }
+}
