@@ -1,0 +1,14 @@
+# Perfil "test": banco separado (stizy_test) para os testes de integração não sujarem o banco de desenvolvimento.
+# Criar com docs/criar_banco_local.sql (PostgreSQL local) ou com o docker compose + o comando do README.
+spring:
+  datasource:
+    url: ${DB_URL_TEST:jdbc:postgresql://localhost:5432/stizy_test}
+    username: ${DB_USER:stizy}
+    password: ${DB_PASSWORD:stizy_dev}
+    hikari:
+      maximum-pool-size: 30   # o teste de reservas simultâneas dispara 20 pedidos ao mesmo tempo
+
+stizy:
+  jwt:
+    # Chave SOMENTE para testes automatizados (base64 de um texto fixo). Nunca usar fora dos testes.
+    secret-base64: c3RpenktY2hhdmUtc29tZW50ZS1wYXJhLXRlc3Rlcy1hdXRvbWF0aXphZG9zLTAwMDE=
