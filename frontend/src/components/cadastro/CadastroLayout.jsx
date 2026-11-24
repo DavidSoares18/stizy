@@ -6,7 +6,7 @@ import { ROTAS } from '../../constants/rotas';
 import './CadastroLayout.css';
 
 /**
- * Estrutura comum dos cadastros em passos (cliente: 2 passos; provedor: 7 passos).
+ * Estrutura comum dos cadastros em passos (cliente: 2 passos; provedor: 6 passos).
  *
  * Desktop : barra roxa + coluna lateral com a lista de passos + formulário à direita.
  * Mobile  : topo "Cadastro" com seta voltar, barra de progresso e botões fixos no rodapé.

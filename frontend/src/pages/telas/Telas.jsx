@@ -13,7 +13,7 @@ const GRUPOS = [
         itens: [
             ['Login', ROTAS.LOGIN],
             ['Cadastro de cliente (2 passos)', ROTAS.CADASTRO_CLIENTE],
-            ['Cadastro de provedor (7 passos)', ROTAS.CADASTRO_PROVEDOR],
+            ['Cadastro de provedor (6 passos)', ROTAS.CADASTRO_PROVEDOR],
         ],
     },
     {

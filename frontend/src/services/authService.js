@@ -30,8 +30,8 @@ export async function entrar(email, senha) {
 /**
  * Cadastro de cliente (2 passos).
  * BACKEND: POST /clientes
- * body: { nome, cpf, celular, email, bairro, cidade, senha, aceitouTermos, foto? }
- * RNF06 (LGPD): coletar apenas o essencial; foto é opcional.
+ * body: { nome, celular, email, bairro, cidade, senha, aceitouTermos, foto? }
+ * RNF06 (LGPD): coletar apenas o essencial (sem CPF); foto é opcional.
  */
 export async function cadastrarCliente(dados) {
     // BACKEND: return requisicao('POST', '/clientes', dados);
@@ -39,9 +39,10 @@ export async function cadastrarCliente(dados) {
 }
 
 /**
- * Cadastro de provedor (7 passos, com rascunho - "Salvar e continuar depois").
+ * Cadastro de provedor (6 passos, com rascunho - "Salvar e continuar depois").
  * BACKEND: POST /provedores   (concluir)  |  PUT /provedores/rascunho (salvar rascunho)
  * body: veja o objeto "dados" montado em pages/cadastro_provedor/CadastroProvedor.jsx
+ *   (sem cpf/documento - LGPD; "categoria" é o slug de src/constants/categorias.js, ex.: 'barbearia')
  */
 export async function cadastrarProvedor(dados) {
     // BACKEND: return requisicao('POST', '/provedores', dados);

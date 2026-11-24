@@ -35,7 +35,6 @@
 .cadastro-cartao .linha.tres { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* Passo 7 */
-.campo.documento { max-width: 340px; }
 
 @media (max-width: 900px) {
   .item-linha.servico, .item-linha.produto { grid-template-columns: 1fr; }

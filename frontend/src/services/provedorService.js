@@ -39,6 +39,17 @@ export async function concluirAtendimento(id) {
     return { ok: true };
 }
 
+/**
+ * Cliente não compareceu: marca o agendamento como FALTOU.
+ * BACKEND (rota futura): PUT /provedor/agendamentos/:id/faltou
+ * Enquanto a rota não existir, a chamada real falha e a tela mostra o erro; no modo protótipo (stub) responde ok.
+ */
+export async function marcarFalta(id) {
+    // BACKEND: return requisicao('PUT', `/provedor/agendamentos/${id}/faltou`);
+    void id;
+    return { ok: true };
+}
+
 /** Bloquear um horário livre (RF17). BACKEND: POST /provedor/bloqueios  body: { data, hora } */
 export async function bloquearHorario(dataIso, hora) {
     // BACKEND: return requisicao('POST', '/provedor/bloqueios', { data: dataIso, hora });

@@ -13,7 +13,7 @@
  *   id, titulo (nome do serviço/produto), negocioId, negocioNome,
  *   inicioUtc (ISO 8601 em UTC - o front converte para o fuso local),
  *   valor, pagamento: 'online' | 'presencial', tipo: 'servico' | 'entrega',
- *   status: 'confirmado' | 'cancelado' | 'concluido'
+ *   status: 'confirmado' | 'cancelado' | 'concluido' | 'faltou'
  * }
  */
 export async function listarAgendamentos() {
